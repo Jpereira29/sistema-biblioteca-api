@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaBibliotecaAPI.Context;
 
@@ -11,9 +12,11 @@ using SistemaBibliotecaAPI.Context;
 namespace SistemaBibliotecaAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317224656_update_tipousuario")]
+    partial class update_tipousuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,21 +68,6 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.HasKey("SystemLogId");
 
                     b.ToTable("SystemLog");
-                });
-
-            modelBuilder.Entity("AutorLivro", b =>
-                {
-                    b.Property<int>("AutoresId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LivrosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AutoresId", "LivrosId");
-
-                    b.HasIndex("LivrosId");
-
-                    b.ToTable("AutorLivro");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -341,6 +329,9 @@ namespace SistemaBibliotecaAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Categoria")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -351,30 +342,9 @@ namespace SistemaBibliotecaAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Livro");
-                });
-
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.LivroAutor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AutorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LivroId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("AutorId");
 
-                    b.HasIndex("LivroId");
-
-                    b.ToTable("LivroAutor");
+                    b.ToTable("Livro");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.TipoUsuario", b =>
@@ -425,21 +395,6 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.HasIndex("TipoUsuarioId");
 
                     b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("AutorLivro", b =>
-                {
-                    b.HasOne("SistemaBibliotecaAPI.Models.Autor", null)
-                        .WithMany()
-                        .HasForeignKey("AutoresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SistemaBibliotecaAPI.Models.Livro", null)
-                        .WithMany()
-                        .HasForeignKey("LivrosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -512,23 +467,15 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.LivroAutor", b =>
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Livro", b =>
                 {
                     b.HasOne("SistemaBibliotecaAPI.Models.Autor", "Autor")
-                        .WithMany()
+                        .WithMany("Livros")
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaBibliotecaAPI.Models.Livro", "Livro")
-                        .WithMany()
-                        .HasForeignKey("LivroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Autor");
-
-                    b.Navigation("Livro");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.Usuario", b =>
@@ -540,6 +487,11 @@ namespace SistemaBibliotecaAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoUsuario");
+                });
+
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Autor", b =>
+                {
+                    b.Navigation("Livros");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.Livro", b =>

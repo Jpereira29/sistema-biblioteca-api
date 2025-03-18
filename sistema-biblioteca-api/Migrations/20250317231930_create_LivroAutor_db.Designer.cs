@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaBibliotecaAPI.Context;
 
@@ -11,9 +12,11 @@ using SistemaBibliotecaAPI.Context;
 namespace SistemaBibliotecaAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317231930_create_LivroAutor_db")]
+    partial class create_LivroAutor_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,13 +72,13 @@ namespace SistemaBibliotecaAPI.Migrations
 
             modelBuilder.Entity("AutorLivro", b =>
                 {
-                    b.Property<int>("AutoresId")
+                    b.Property<int>("AutorsId")
                         .HasColumnType("int");
 
                     b.Property<int>("LivrosId")
                         .HasColumnType("int");
 
-                    b.HasKey("AutoresId", "LivrosId");
+                    b.HasKey("AutorsId", "LivrosId");
 
                     b.HasIndex("LivrosId");
 
@@ -341,6 +344,9 @@ namespace SistemaBibliotecaAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Categoria")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -431,7 +437,7 @@ namespace SistemaBibliotecaAPI.Migrations
                 {
                     b.HasOne("SistemaBibliotecaAPI.Models.Autor", null)
                         .WithMany()
-                        .HasForeignKey("AutoresId")
+                        .HasForeignKey("AutorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

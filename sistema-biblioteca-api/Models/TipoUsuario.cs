@@ -1,8 +1,11 @@
-﻿namespace SistemaBibliotecaAPI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SistemaBibliotecaAPI.Models;
 
 public partial class TipoUsuario
 {
-    public int TipoUsuarioId { get; set; }
+    [Key]
+    public int Id { get; set; }
 
     public string Tipo { get; set; } = null!;
 }

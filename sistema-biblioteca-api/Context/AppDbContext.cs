@@ -14,5 +14,6 @@ namespace SistemaBibliotecaAPI.Context
         public DbSet<Livro> Livro { get; set; }
         public DbSet<TipoUsuario> TipoUsuario { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<LivroAutor> LivroAutor { get; set; }
     }
 }
