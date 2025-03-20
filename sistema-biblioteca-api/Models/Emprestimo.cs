@@ -12,13 +12,13 @@ public partial class Emprestimo
 
     public DateTime PrevisaoEntrega { get; set; }
 
-    [ForeignKey(nameof(Usuario))]
-    public int UsuarioId { get; set; }
+    [ForeignKey(nameof(Cliente))]
+    public int ClienteId { get; set; }
 
     [ForeignKey(nameof(Livro))]
     public int LivroId { get; set; }
 
     public virtual Livro Livro { get; set; } 
 
-    public virtual Usuario Usuario { get; set; }
+    public virtual Cliente Cliente { get; set; }
 }

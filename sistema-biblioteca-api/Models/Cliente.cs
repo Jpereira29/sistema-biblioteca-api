@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class Usuario 
+public partial class Cliente 
 {
     [Key]
     public int Id { get; set; }
@@ -16,10 +16,10 @@ public partial class Usuario
 
     public string Email { get; set; } = null!;
 
-    [ForeignKey(nameof(TipoUsuario))]
-    public int TipoUsuarioId { get; set; }
+    [ForeignKey(nameof(TipoCliente))]
+    public int TipoClienteId { get; set; }
 
     public virtual ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
 
-    public virtual TipoUsuario TipoUsuario { get; set; }
+    public virtual TipoCliente TipoCliente { get; set; }
 }

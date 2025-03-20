@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistemaBibliotecaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,13 +56,28 @@ namespace SistemaBibliotecaAPI.Migrations
                 name: "Autor",
                 columns: table => new
                 {
-                    AutorId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autor", x => x.AutorId);
+                    table.PrimaryKey("PK_Autor", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Livro",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Categoria = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnoPublicacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Livro", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,16 +102,16 @@ namespace SistemaBibliotecaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoUsuario",
+                name: "TipoCliente",
                 columns: table => new
                 {
-                    TipoUsuarioId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoUsuario", x => x.TipoUsuarioId);
+                    table.PrimaryKey("PK_TipoCliente", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,47 +221,51 @@ namespace SistemaBibliotecaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Livro",
+                name: "LivroAutor",
                 columns: table => new
                 {
-                    LivroId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnoPublicacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AutorId = table.Column<int>(type: "int", nullable: true)
+                    LivroId = table.Column<int>(type: "int", nullable: false),
+                    AutorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro", x => x.LivroId);
+                    table.PrimaryKey("PK_LivroAutor", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Livro_Autor_AutorId",
+                        name: "FK_LivroAutor_Autor_AutorId",
                         column: x => x.AutorId,
                         principalTable: "Autor",
-                        principalColumn: "AutorId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LivroAutor_Livro_LivroId",
+                        column: x => x.LivroId,
+                        principalTable: "Livro",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefone1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefone1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefone2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TipoUsuario = table.Column<int>(type: "int", nullable: false),
-                    TipoUsuarioNavigationTipoUsuarioId = table.Column<int>(type: "int", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TipoClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
+                    table.PrimaryKey("PK_Usuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuario_TipoUsuario_TipoUsuarioNavigationTipoUsuarioId",
-                        column: x => x.TipoUsuarioNavigationTipoUsuarioId,
-                        principalTable: "TipoUsuario",
-                        principalColumn: "TipoUsuarioId",
+                        name: "FK_Usuario_TipoCliente_TipoClienteId",
+                        column: x => x.TipoClienteId,
+                        principalTable: "TipoCliente",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -254,26 +273,28 @@ namespace SistemaBibliotecaAPI.Migrations
                 name: "Emprestimo",
                 columns: table => new
                 {
-                    EmprestimoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DataEmprestimo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrevisaoEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true),
-                    LivroId = table.Column<int>(type: "int", nullable: true)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    LivroId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Emprestimo", x => x.EmprestimoId);
+                    table.PrimaryKey("PK_Emprestimo", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Emprestimo_Livro_LivroId",
                         column: x => x.LivroId,
                         principalTable: "Livro",
-                        principalColumn: "LivroId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Emprestimo_Usuario_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuario",
-                        principalColumn: "UsuarioId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -326,14 +347,19 @@ namespace SistemaBibliotecaAPI.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Livro_AutorId",
-                table: "Livro",
+                name: "IX_LivroAutor_AutorId",
+                table: "LivroAutor",
                 column: "AutorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_TipoUsuarioNavigationTipoUsuarioId",
+                name: "IX_LivroAutor_LivroId",
+                table: "LivroAutor",
+                column: "LivroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_TipoClienteId",
                 table: "Usuario",
-                column: "TipoUsuarioNavigationTipoUsuarioId");
+                column: "TipoClienteId");
         }
 
         /// <inheritdoc />
@@ -358,6 +384,9 @@ namespace SistemaBibliotecaAPI.Migrations
                 name: "Emprestimo");
 
             migrationBuilder.DropTable(
+                name: "LivroAutor");
+
+            migrationBuilder.DropTable(
                 name: "SystemLog");
 
             migrationBuilder.DropTable(
@@ -367,16 +396,16 @@ namespace SistemaBibliotecaAPI.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Livro");
-
-            migrationBuilder.DropTable(
                 name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Autor");
 
             migrationBuilder.DropTable(
-                name: "TipoUsuario");
+                name: "Livro");
+
+            migrationBuilder.DropTable(
+                name: "TipoCliente");
         }
     }
 }

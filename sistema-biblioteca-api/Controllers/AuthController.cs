@@ -7,7 +7,6 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class AuthController(UserManager<IdentityUser<int>> userManager, TokenService tokenService, IConfiguration configuration, RoleManager<IdentityRole<int>> roleManager) : AuthBaseController<IdentityUser<int>, int>(userManager, tokenService, configuration, roleManager)
     {
     }

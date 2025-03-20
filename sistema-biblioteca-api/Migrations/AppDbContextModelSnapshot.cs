@@ -67,21 +67,6 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.ToTable("SystemLog");
                 });
 
-            modelBuilder.Entity("AutorLivro", b =>
-                {
-                    b.Property<int>("AutoresId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LivrosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AutoresId", "LivrosId");
-
-                    b.HasIndex("LivrosId");
-
-                    b.ToTable("AutorLivro");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -292,12 +277,41 @@ namespace SistemaBibliotecaAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Autor");
+                });
+
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Cliente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefone1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefone2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoClienteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoClienteId");
+
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.Emprestimo", b =>
@@ -308,6 +322,9 @@ namespace SistemaBibliotecaAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataEmprestimo")
                         .HasColumnType("datetime2");
 
@@ -317,14 +334,11 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.Property<DateTime>("PrevisaoEntrega")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("LivroId");
+                    b.HasIndex("ClienteId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("LivroId");
 
                     b.ToTable("Emprestimo");
                 });
@@ -338,15 +352,12 @@ namespace SistemaBibliotecaAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AnoPublicacao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Categoria")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -377,7 +388,7 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.ToTable("LivroAutor");
                 });
 
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.TipoUsuario", b =>
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.TipoCliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -386,60 +397,11 @@ namespace SistemaBibliotecaAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Tipo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoUsuario");
-                });
-
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TipoUsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TipoUsuarioId");
-
-                    b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("AutorLivro", b =>
-                {
-                    b.HasOne("SistemaBibliotecaAPI.Models.Autor", null)
-                        .WithMany()
-                        .HasForeignKey("AutoresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SistemaBibliotecaAPI.Models.Livro", null)
-                        .WithMany()
-                        .HasForeignKey("LivrosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("TipoCliente");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -493,35 +455,46 @@ namespace SistemaBibliotecaAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Cliente", b =>
+                {
+                    b.HasOne("SistemaBibliotecaAPI.Models.TipoCliente", "TipoCliente")
+                        .WithMany()
+                        .HasForeignKey("TipoClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoCliente");
+                });
+
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.Emprestimo", b =>
                 {
+                    b.HasOne("SistemaBibliotecaAPI.Models.Cliente", "Cliente")
+                        .WithMany("Emprestimos")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SistemaBibliotecaAPI.Models.Livro", "Livro")
                         .WithMany("Emprestimos")
                         .HasForeignKey("LivroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaBibliotecaAPI.Models.Usuario", "Usuario")
-                        .WithMany("Emprestimos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Cliente");
 
                     b.Navigation("Livro");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.LivroAutor", b =>
                 {
                     b.HasOne("SistemaBibliotecaAPI.Models.Autor", "Autor")
-                        .WithMany()
+                        .WithMany("LivroAutores")
                         .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SistemaBibliotecaAPI.Models.Livro", "Livro")
-                        .WithMany()
+                        .WithMany("LivroAutores")
                         .HasForeignKey("LivroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -531,25 +504,21 @@ namespace SistemaBibliotecaAPI.Migrations
                     b.Navigation("Livro");
                 });
 
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Usuario", b =>
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Autor", b =>
                 {
-                    b.HasOne("SistemaBibliotecaAPI.Models.TipoUsuario", "TipoUsuario")
-                        .WithMany()
-                        .HasForeignKey("TipoUsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("LivroAutores");
+                });
 
-                    b.Navigation("TipoUsuario");
+            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Cliente", b =>
+                {
+                    b.Navigation("Emprestimos");
                 });
 
             modelBuilder.Entity("SistemaBibliotecaAPI.Models.Livro", b =>
                 {
                     b.Navigation("Emprestimos");
-                });
 
-            modelBuilder.Entity("SistemaBibliotecaAPI.Models.Usuario", b =>
-                {
-                    b.Navigation("Emprestimos");
+                    b.Navigation("LivroAutores");
                 });
 #pragma warning restore 612, 618
         }

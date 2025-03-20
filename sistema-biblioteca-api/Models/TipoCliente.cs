@@ -2,7 +2,7 @@
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class TipoUsuario
+public partial class TipoCliente
 {
     [Key]
     public int Id { get; set; }

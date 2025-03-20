@@ -12,8 +12,8 @@ namespace SistemaBibliotecaAPI.Context
         public DbSet<Autor> Autor { get; set; }
         public DbSet<Emprestimo> Emprestimo { get; set; }
         public DbSet<Livro> Livro { get; set; }
-        public DbSet<TipoUsuario> TipoUsuario { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<TipoCliente> TipoCliente { get; set; }
+        public DbSet<Cliente> Usuario { get; set; }
         public DbSet<LivroAutor> LivroAutor { get; set; }
     }
 }
