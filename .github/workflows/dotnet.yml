@@ -1,7 +1,5 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET build
 
 on:
   push:
@@ -20,6 +18,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
+    - name: Setup NuGet Source for GitHub Packages
+      run: dotnet nuget add source "https://nuget.pkg.github.com/AuthenticCod3/index.json" -n github -u "jpereira29" -p "${{ secrets.GH_PACKAGES_TOKEN }}" --store-password-in-clear-text
+
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
