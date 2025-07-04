@@ -18,7 +18,7 @@ public partial class Emprestimo
     [ForeignKey(nameof(Livro))]
     public int LivroId { get; set; }
 
-    public virtual Livro Livro { get; set; } 
+    public virtual Livro Livro { get; set; }
 
     public virtual Cliente Cliente { get; set; }
 }

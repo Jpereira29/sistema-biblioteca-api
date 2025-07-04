@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class Cliente 
+public partial class Cliente
 {
     [Key]
     public int Id { get; set; }

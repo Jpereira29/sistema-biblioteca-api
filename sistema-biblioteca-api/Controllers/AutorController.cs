@@ -6,7 +6,7 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AutorController(UnitOfWork context) : EFControllerBaseController<Autor>(context)
+    public class AutorController(UnitOfWork context) : EFBaseController<Autor>(context)
     {
     }
 }

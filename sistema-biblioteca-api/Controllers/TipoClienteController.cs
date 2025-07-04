@@ -6,7 +6,7 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TipoClienteController(UnitOfWork context) : EFControllerBaseController<TipoCliente>(context)
+    public class TipoClienteController(UnitOfWork context) : EFBaseController<TipoCliente>(context)
     {
     }
 }

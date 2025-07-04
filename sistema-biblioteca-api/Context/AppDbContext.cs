@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecaAPI.Models;
 namespace SistemaBibliotecaAPI.Context
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>(options), IAppDbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<Usuario, IdentityRole<long>, long>(options), IAppDbContext
     {
         public DbSet<SystemLog> SystemLog { get; set; }
         public DbSet<Autor> Autor { get; set; }

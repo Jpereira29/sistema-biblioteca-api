@@ -7,7 +7,7 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmprestimoController(UnitOfWork context) : EFControllerBaseController<Emprestimo>(context)
+    public class EmprestimoController(UnitOfWork context) : EFBaseController<Emprestimo>(context)
     {
         public override IActionResult Get()
         {

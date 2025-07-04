@@ -1,26 +1,41 @@
-﻿using ACBaseAPI;
+﻿using ACBaseAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SistemaBibliotecaAPI.Context;
+using SistemaBibliotecaAPI.Models;
 
-var startup = new ACStartup<AppDbContext>();
+var builder = WebApplication.CreateBuilder(args);
 
-startup.builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(startup.builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-startup.builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+builder.Services.AddIdentity<Usuario, IdentityRole<long>>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-startup.Build();
+builder.Services.AddACBaseApiServices<AppDbContext>(builder.Configuration);
 
-startup.app.UseAuthentication();
+var app = builder.Build();
 
-startup.app.UseCors(option => option
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseExceptionHandler(options => { });
+
+app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors(option => option
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-startup.app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
-startup.Run();
+app.MapControllers();
+
+app.Run();
