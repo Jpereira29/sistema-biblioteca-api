@@ -50,9 +50,9 @@ Aprender a usar CI desde o início da sua jornada na programação é um grande 
 
 ## Colaboradores
 
-- João Pereira (Colaborador)  
-- Jeferson Santos (Colaborador)
-- ( Colaborador)
+-  JORGE PEREIRA DE OLIVEIRA 
+- CICERO JEFERSON SANTOS DE ARAÚJO 
+- FRANCISCO AIRTON ARAUJO JUNIOR 
 
 ## Contribuição
 
