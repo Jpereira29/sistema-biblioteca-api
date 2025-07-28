@@ -47,3 +47,14 @@ Aprender a usar CI desde o início da sua jornada na programação é um grande 
 2.  **Aumenta a Confiança para Experimentar**: Com uma rede de segurança de testes automáticos, você perde o medo de fazer alterações ou de refatorar seu código. Se algo quebrar, você saberá na hora e poderá corrigir facilmente. Isso acelera muito o aprendizado.
 3.  **Constrói um Portfólio Profissional**: Ter um selo de "build passando" (a badge ✅) em seus projetos no GitHub é um sinal claro para recrutadores de que você conhece as práticas modernas de desenvolvimento de software. Mostra profissionalismo e cuidado com a qualidade.
 4.  **Prepara para o Mercado de Trabalho**: Praticamente todas as empresas de tecnologia utilizam CI/CD. Chegar em uma entrevista ou em um novo emprego já sabendo como essa cultura funciona coloca você muitos passos à frente.
+
+## Colaboradores
+
+- João Pereira (Colaborador)  
+- Jeferson Santos (Colaborador)
+- ( Colaborador)
+
+## Contribuição
+
+Participei da organização do repositório, da documentação e acompanhei o desenvolvimento da API.
+
