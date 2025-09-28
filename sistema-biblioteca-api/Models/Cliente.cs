@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ACBaseAPI.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class Cliente
+public partial class Cliente : BaseEntity<int>
 {
-    [Key]
-    public int Id { get; set; }
-
     public string Nome { get; set; } = null!;
 
     public string Telefone1 { get; set; } = null!;

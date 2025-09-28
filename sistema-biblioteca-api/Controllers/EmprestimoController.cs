@@ -7,11 +7,11 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmprestimoController(UnitOfWork context) : EFBaseController<Emprestimo>(context)
+    public class EmprestimoController(IUnitOfWork context, IRepository<Emprestimo> repository) : EFBaseController<Emprestimo, int>(context, repository)
     {
         public override IActionResult Get()
         {
-            var emprestimos = _context.Get().Include(x => x.Livro).Include(x => x.Cliente).Select(x => new
+            var emprestimos = _repository.Get().Include(x => x.Livro).Include(x => x.Cliente).Select(x => new
             {
                 x.Id,
                 x.DataEmprestimo,
@@ -33,8 +33,8 @@ namespace SistemaBibliotecaAPI.Controllers
 
         public override async Task<IActionResult> Post(Emprestimo entity)
         {
-            _context.Add(entity);
-            await _context.SaveChangesAsync();
+            _repository.Add(entity);
+            await _repository.SaveChangesAsync();
             return Ok();
         }
     }

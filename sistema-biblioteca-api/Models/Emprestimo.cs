@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ACBaseAPI.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class Emprestimo
+public partial class Emprestimo : BaseEntity<int>
 {
-    [Key]
-    public int Id { get; set; }
-
     public DateTime DataEmprestimo { get; set; }
 
     public DateTime PrevisaoEntrega { get; set; }

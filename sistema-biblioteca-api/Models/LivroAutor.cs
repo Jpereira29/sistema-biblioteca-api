@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ACBaseAPI.Models;
 
 namespace SistemaBibliotecaAPI.Models
 {
-    public class LivroAutor
+    public class LivroAutor : BaseEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public int LivroId { get; set; }
         public int AutorId { get; set; }
 

@@ -7,11 +7,11 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LivroController(UnitOfWork context) : ControllerBase
+    public class LivroController(IUnitOfWork context, IRepository<LivroAutor> livroAutorRepository, IRepository<Livro> livroRepository) : ControllerBase
     {
-        private readonly IRepository<LivroAutor> _livroAutorRepository = context.Repository<LivroAutor>();
-        private readonly IRepository<Livro> _livroRepository = context.Repository<Livro>();
-        private readonly UnitOfWork _unitOfWork = context;
+        private readonly IRepository<LivroAutor> _livroAutorRepository = livroAutorRepository;
+        private readonly IRepository<Livro> _livroRepository = livroRepository;
+        private readonly IUnitOfWork _unitOfWork = context;
 
         [HttpGet]
         public IActionResult Get()
@@ -39,6 +39,7 @@ namespace SistemaBibliotecaAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(LivroDTO entity)
         {
+
             var livro = new Livro
             {
                 Titulo = entity.Titulo,

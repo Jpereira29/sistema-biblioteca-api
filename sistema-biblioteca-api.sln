@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaBibliotecaAPI", "sistema-biblioteca-api\SistemaBibliotecaAPI.csproj", "{19F03CC0-EB64-4FB1-99A7-8343A227443F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaBiblioteca.Tests", "SistemaBiblioteca.Tests\SistemaBiblioteca.Tests.csproj", "{FBC1DF1B-A435-402B-BC49-3525F48B8E76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +17,15 @@ Global
 		{19F03CC0-EB64-4FB1-99A7-8343A227443F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F03CC0-EB64-4FB1-99A7-8343A227443F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F03CC0-EB64-4FB1-99A7-8343A227443F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC1DF1B-A435-402B-BC49-3525F48B8E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC1DF1B-A435-402B-BC49-3525F48B8E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC1DF1B-A435-402B-BC49-3525F48B8E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC1DF1B-A435-402B-BC49-3525F48B8E76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19020379-EBF3-4559-9FA2-D934A5CA9F1D}
 	EndGlobalSection
 EndGlobal

@@ -7,11 +7,11 @@ namespace SistemaBibliotecaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController(UnitOfWork context) : EFBaseController<Cliente>(context)
+    public class ClienteController(IUnitOfWork context, IRepository<Cliente> repository) : EFBaseController<Cliente, int>(context, repository)
     {
         public override IActionResult Get()
         {
-            var usuarios = _context.Get().Include(x => x.TipoCliente);
+            var usuarios = _repository.Get().Include(x => x.TipoCliente);
             return Ok(usuarios);
         }
     }

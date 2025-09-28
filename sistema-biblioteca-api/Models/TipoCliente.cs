@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ACBaseAPI.Models;
 
 namespace SistemaBibliotecaAPI.Models;
 
-public partial class TipoCliente
+public partial class TipoCliente : BaseEntity<int>
 {
-    [Key]
-    public int Id { get; set; }
-
     public string Tipo { get; set; } = null!;
 }

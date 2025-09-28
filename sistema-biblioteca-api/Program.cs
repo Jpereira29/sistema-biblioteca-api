@@ -6,8 +6,18 @@ using SistemaBibliotecaAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseInMemoryDatabase("InMemoryDbForTesting");
+    });
+}
 
 builder.Services.AddIdentity<Usuario, IdentityRole<long>>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -22,8 +32,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseExceptionHandler(options => { });
+else
+{
+    app.UseExceptionHandler(options => { });
+}
 
 app.UseHttpsRedirection();
 app.UseRouting();
@@ -39,3 +51,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
